@@ -40,7 +40,7 @@ __
 
 ###P22
 
->Consider the GBN protocol with a sender window size of 4 and a sequence
+> Consider the GBN protocol with a sender window size of 4 and a sequence
 number range of 1,024. Suppose that at time t, the next in-order packet that the
 receiver is expecting has a sequence number of k. Assume that the medium
 does not reorder messages. Answer the following questions:
@@ -49,6 +49,11 @@ dow at time t? Justify your answer.
 b. What are all possible values of the ACK field in all possible messages cur-
 rently propagating back to the sender at time t? Justify your answer.
 
+__
+a. there are two scenarios. Scenario 1: receiver and received and ACKed all packets up to k-1. Senders window will contain [k, k+(4-1)]. If the ACKs were not received, then it resends those packets, making the window [k-4,k]
+b. since the receiver is waiting for packet sequence number k, it has already received all packets up to k-1. If the sender is sending [k-4, k-1], then sender has received ACK for k-(4-1). Also, receiver will not resend this ACK meaning current ACKs propagating is [k-5, k-1]
+__
+
 ----------
 
 ###P23
@@ -56,6 +61,10 @@ rently propagating back to the sender at time t? Justify your answer.
 > Consider the GBN and SR protocols. Suppose the sequence number space is
 of size k. What is the largest allowable sender window that will avoid the
 occurrence of problems such as that in Figure 3.27 for each of these protocols?
+
+__
+The sequence number space must be at least twice as large as the window size
+__
 
 ----------
 
@@ -84,6 +93,10 @@ loss.) For each segment in your figure, provide the sequence number and
 the number of bytes of data; for each acknowledgment that you add, pro-
 vide the acknowledgment number.
 
+__
+
+__
+
 ----------
 
 ###P31
@@ -97,6 +110,10 @@ each sample is obtained, assuming a value of β = 0.25 and assuming the
 value of DevRTT was 5 ms just before the first of these five samples was
 obtained. Last, compute the TCP TimeoutInterval after each of these
 samples is obtained.
+
+__
+
+__
 
 ----------
 
@@ -112,6 +129,10 @@ the four sample RTTs.
 b. Generalize your formula for n sample RTTs.
 c. For the formula in part (b) let n approach infinity. Comment on why this
 averaging procedure is called an exponential moving average.
+
+__
+
+__
 
 ----------
 
@@ -141,6 +162,10 @@ k. Again suppose TCP Tahoe is used, and there is a timeout event at 22nd
 round. How many packets have been sent out from 17th round till 22nd
 round, inclusive?
 
+__
+
+__
+
 ----------
 
 ###P43
@@ -156,6 +181,10 @@ process in Host A from continuously passing data to its TCP socket at rate S
 bps? TCP flow control? TCP congestion control? Or something else?
 Elaborate.
 
+__
+
+__
+
 ----------
 
 ###P54
@@ -167,6 +196,10 @@ has no more data to send) at t 1 . TCP remains idle for a relatively long period
 time and then wants to send more data at t 2 . What are the advantages and dis-
 advantages of having TCP use the cwnd and ssthresh values from t 1 when
 starting to send data at t 2 ? What alternative would you recommend? Why?
+
+__
+
+__
 
 ----------
 
