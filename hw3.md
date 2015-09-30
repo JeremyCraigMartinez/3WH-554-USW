@@ -102,7 +102,8 @@ vide the acknowledgment number.
 - sequence        number = 207; src port number = 302; dest port number = 80;
 - acknowledgement number = 207; src port number = 80;  dest port number = 302;
 - acknowledgement number = 127; //still waiting for bytes 127 and after
-- ![27d](Capture.png)
+- ![27d](Capture.png) 
+	wrong. ACKs should be 127, 207, 247
 
 
 ----------
@@ -121,33 +122,33 @@ samples is obtained.
 
 
 > 
-1. After 106
-	- EstimatedRTT
-	- DevRTT
-	- TimeoutInterval
-2. After 120
-	- EstimatedRTT
-	- DevRTT
-	- TimeoutInterval
-3. After 140
-	- EstimatedRTT
-	- DevRTT
-	- TimeoutInterval
-4. After 90
-	- EstimatedRTT
-	- DevRTT
-	- TimeoutInterval
-5. After 115
-	- EstimatedRTT
-	- DevRTT
-	- TimeoutInterval
+1. After 100
+	- EstimatedRTT = 0.875*100 + 0.125*106 = 100.75ms
+	- DevRTT = 0.25*(106 - 100.75) + 0.75*5 = 5.06ms
+	- TimeoutInterval = 100.75 + 4*5.06 = 120.99ms
+2. After 106
+	- EstimatedRTT = 0.875*106 + 0.125*120 = 103.15ms
+	- DevRTT = 0.25*(120 - 103.15) + 0.75*5 = 8ms
+	- TimeoutInterval = 103.15 + 4*8 = 135.15ms
+3. After 120
+	- EstimatedRTT = 0.875*120 + 0.125*140 = 107.76ms
+	- DevRTT = 0.25*(140 - 107.76) + 0.75*5 = 14.06ms
+	- TimeoutInterval = 107.76 + 4*14.06 = 164ms
+4. After 140
+	- EstimatedRTT = 0.875*140 + 0.125*90 = 105.54ms
+	- DevRTT = 0.25*(90 - 105.54) + 0.75*5 = 14.42ms
+	- TimeoutInterval = 105.54 + 4*14.42 = 163.22ms
+5. After 90
+	- EstimatedRTT = 0.875*90 + 0.125*115 = 106.71ms
+	- DevRTT = 0.25*(115 - 106.71) + 0.75*5 = 12.88ms
+	- TimeoutInterval = 106.71 + 4*12.88 = 158.23ms
 
 
 ----------
 
 ###P32
 
-Consider the TCP procedure for estimating RTT. Suppose that ␣ = 0.1. Let
+Consider the TCP procedure for estimating RTT. Suppose that α = 0.1. Let
 SampleRTT 1 be the most recent sample RTT, let SampleRTT 2 be the next
 most recent sample RTT, and so on.
 a. For a given TCP connection, suppose four acknowledgments have been
@@ -160,6 +161,11 @@ averaging procedure is called an exponential moving average.
 
 
 > 
+- EstimatedRTT(1) = SampleRTT
+  EstimatedRTT(2) = x * SampleRTT(1) + (1-x)*SampleRTT(2)
+  EstimatedRTT(3) = x * SampleRTT(1) + (1-x)(x*SampleRTT(2) + (1-x)*SampleRTT(3))
+  EstimatedRTT(4) = x * SampleRTT(1) + (1-x)*EstimatedRTT(3)
+- x * summation[(n-1)(1-x)^j]
 
 
 ----------
@@ -192,6 +198,8 @@ round, inclusive?
 
 
 > 
+once we receive 3 duplicate ACKs (1 + 3 dups), then cut data transfer in half (first peak)
+once we get a timeout (second peak), go back to 1 at slow start TCP mode
 
 
 ----------
@@ -211,6 +219,9 @@ Elaborate.
 
 
 > 
+A               B
+ __  R bytes
+|__|----------->
 
 
 ----------
@@ -245,3 +256,8 @@ with the correct acknowledgment number. Assuming the server chooses a
 random initial sequence number and there is no “man-in-the-middle,” can
 the server be certain that the client is indeed at Y (and not at some other
 address X that is spoofing Y)?
+
+
+> 
+- the server will send it's response to address Y so the client at address X will not see any response. This is not a problem for establishing a connection because UDP does not require a three way handshake like TCP. Y will throw away this packet. This is common in DDoS
+- the server will send it's response to address Y so the client at address X will not see any response. Client at Y cannot guess the 32 bit seq so they cannot complete the three way handshake. This is common in DDoS
