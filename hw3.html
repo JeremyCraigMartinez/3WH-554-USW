@@ -1016,14 +1016,12 @@ body .markdown-body
 }
 </style><title>hw3</title></head><body><article class="markdown-body"><h1 id="homework-chapter-3"><a name="user-content-homework-chapter-3" href="#homework-chapter-3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Homework Chapter 3</h1>
 <h3 id="p15"><a name="user-content-p15" href="#p15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P15</h3>
-<blockquote>
 <p>Consider the cross-country example shown in Figure 3.17. How big would<br />
 the window size have to be for the channel utilization to be greater than 98<br />
 percent? Suppose that the size of a packet is 1,500 bytes, including both<br />
 header fields and data.</p>
-</blockquote>
-<p><strong><br />
-d = data transfer<br />
+<blockquote>
+<p>d = data transfer<br />
 L = packet length<br />
 R = transmission rate<br />
 W = window size<br />
@@ -1031,11 +1029,10 @@ RTT = speed of light round trip propagation delay<br />
 d = L/R<br />
 Usender = (W * d) / (RTT + d)<br />
 Usender = (W * .008) / 30.008 = W * 0.00027 = .90<br />
-W = 3333.33<br />
-</strong></p>
+W = 3333.33  </p>
+</blockquote>
 <hr />
 <h3 id="p16"><a name="user-content-p16" href="#p16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P16</h3>
-<blockquote>
 <p>Suppose an application uses rdt 3.0 as its transport layer protocol. As the<br />
 stop-and-wait protocol has very low channel utilization (shown in the cross-<br />
 country example), the designers of this application let the receiver keep send-<br />
@@ -1043,13 +1040,12 @@ ing back a number (more than two) of alternating ACK 0 and ACK 1 even if<br />
 the corresponding data have not arrived at the receiver. Would this applica-<br />
 tion design increase the channel utilization? Why? Are there any potential<br />
 problems with this approach? Explain.</p>
+<blockquote>
+<p>Yes. This actually causes the sender to send a number of pipelined data into the channel.<br />
+Yes. Here is one potential problem. If data segments are lost in the channel, then the sender of rdt 3.0 won&rsquo;t re-send those segments, unless there are some additional mechanism in the application to recover from loss.</p>
 </blockquote>
-<p><strong><br />
-Yes. This actually causes the sender to send a number of pipelined data into the channel.<br />
-Yes. Here is one potential problem. If data segments are lost in the channel, then the sender of rdt 3.0 won&rsquo;t re-send those segments, unless there are some additional mechanism in the application to recover from loss.</strong></p>
 <hr />
 <h3 id="p22"><a name="user-content-p22" href="#p22" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P22</h3>
-<blockquote>
 <p>Consider the GBN protocol with a sender window size of 4 and a sequence<br />
 number range of 1,024. Suppose that at time t, the next in-order packet that the<br />
 receiver is expecting has a sequence number of k. Assume that the medium<br />
@@ -1058,22 +1054,22 @@ a. What are the possible sets of sequence numbers inside the sender’s win-<br 
 dow at time t? Justify your answer.<br />
 b. What are all possible values of the ACK field in all possible messages cur-<br />
 rently propagating back to the sender at time t? Justify your answer.</p>
+<blockquote>
+<ul>
+<li>there are two scenarios. Scenario 1: receiver and received and ACKed all packets up to k-1. Senders window will contain [k, k+(4-1)]. If the ACKs were not received, then it resends those packets, making the window [k-4,k]</li>
+<li>since the receiver is waiting for packet sequence number k, it has already received all packets up to k-1. If the sender is sending [k-4, k-1], then sender has received ACK for k-(4-1). Also, receiver will not resend this ACK meaning current ACKs propagating is [k-5, k-1]</li>
+</ul>
 </blockquote>
-<p><strong><br />
-a. there are two scenarios. Scenario 1: receiver and received and ACKed all packets up to k-1. Senders window will contain [k, k+(4-1)]. If the ACKs were not received, then it resends those packets, making the window [k-4,k]<br />
-b. since the receiver is waiting for packet sequence number k, it has already received all packets up to k-1. If the sender is sending [k-4, k-1], then sender has received ACK for k-(4-1). Also, receiver will not resend this ACK meaning current ACKs propagating is [k-5, k-1]</strong></p>
 <hr />
 <h3 id="p23"><a name="user-content-p23" href="#p23" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P23</h3>
-<blockquote>
 <p>Consider the GBN and SR protocols. Suppose the sequence number space is<br />
 of size k. What is the largest allowable sender window that will avoid the<br />
 occurrence of problems such as that in Figure 3.27 for each of these protocols?</p>
+<blockquote>
+<p>The sequence number space must be at least twice as large as the window size</p>
 </blockquote>
-<p><strong><br />
-The sequence number space must be at least twice as large as the window size</strong></p>
 <hr />
 <h3 id="p27"><a name="user-content-p27" href="#p27" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P27</h3>
-<blockquote>
 <p>Host A and B are communicating over a TCP connection, and Host B has<br />
 already received from A all bytes up through byte 126. Suppose Host A then<br />
 sends two segments to Host B back-to-back. The first and second segments<br />
@@ -1096,12 +1092,16 @@ segments and acknowledgments sent. (Assume there is no additional packet<br />
 loss.) For each segment in your figure, provide the sequence number and<br />
 the number of bytes of data; for each acknowledgment that you add, pro-<br />
 vide the acknowledgment number.</p>
+<blockquote>
+<ul>
+<li>sequence        number = 207; src port number = 302; dest port number = 80;</li>
+<li>acknowledgement number = 207; src port number = 80;  dest port number = 302;</li>
+<li>acknowledgement number = 127; //still waiting for bytes 127 and after</li>
+<li><img alt="27d" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/Capture.png" /></li>
+</ul>
 </blockquote>
-<p>__</p>
-<p>__</p>
 <hr />
 <h3 id="p31"><a name="user-content-p31" href="#p31" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P31</h3>
-<blockquote>
 <p>Suppose that the five measured SampleRTT values (see Section 3.5.3) are<br />
 106 ms, 120 ms, 140 ms, 90 ms, and 115 ms. Compute the EstimatedRTT<br />
 after each of these SampleRTT values is obtained, using a value of α = 0.125<br />
@@ -1111,12 +1111,42 @@ each sample is obtained, assuming a value of β = 0.25 and assuming the<br />
 value of DevRTT was 5 ms just before the first of these five samples was<br />
 obtained. Last, compute the TCP TimeoutInterval after each of these<br />
 samples is obtained.</p>
+<blockquote>
+<ol>
+<li>After 106<ul>
+<li>EstimatedRTT</li>
+<li>DevRTT</li>
+<li>TimeoutInterval</li>
+</ul>
+</li>
+<li>After 120<ul>
+<li>EstimatedRTT</li>
+<li>DevRTT</li>
+<li>TimeoutInterval</li>
+</ul>
+</li>
+<li>After 140<ul>
+<li>EstimatedRTT</li>
+<li>DevRTT</li>
+<li>TimeoutInterval</li>
+</ul>
+</li>
+<li>After 90<ul>
+<li>EstimatedRTT</li>
+<li>DevRTT</li>
+<li>TimeoutInterval</li>
+</ul>
+</li>
+<li>After 115<ul>
+<li>EstimatedRTT</li>
+<li>DevRTT</li>
+<li>TimeoutInterval</li>
+</ul>
+</li>
+</ol>
 </blockquote>
-<p>__</p>
-<p>__</p>
 <hr />
 <h3 id="p32"><a name="user-content-p32" href="#p32" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P32</h3>
-<blockquote>
 <p>Consider the TCP procedure for estimating RTT. Suppose that ␣ = 0.1. Let<br />
 SampleRTT 1 be the most recent sample RTT, let SampleRTT 2 be the next<br />
 most recent sample RTT, and so on.<br />
@@ -1127,12 +1157,9 @@ the four sample RTTs.<br />
 b. Generalize your formula for n sample RTTs.<br />
 c. For the formula in part (b) let n approach infinity. Comment on why this<br />
 averaging procedure is called an exponential moving average.</p>
-</blockquote>
-<p>__</p>
-<p>__</p>
+<blockquote></blockquote>
 <hr />
 <h3 id="p40"><a name="user-content-p40" href="#p40" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P40</h3>
-<blockquote>
 <p>Consider Figure 3.58. Assuming TCP Reno is the protocol experiencing the<br />
 behavior shown above, answer the following questions. In all cases, you<br />
 should provide a short discussion justifying your answer.<br />
@@ -1156,12 +1183,9 @@ and the congestion window size at the 19th round?<br />
 k. Again suppose TCP Tahoe is used, and there is a timeout event at 22nd<br />
 round. How many packets have been sent out from 17th round till 22nd<br />
 round, inclusive?</p>
-</blockquote>
-<p>__</p>
-<p>__</p>
+<blockquote></blockquote>
 <hr />
 <h3 id="p43"><a name="user-content-p43" href="#p43" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P43</h3>
-<blockquote>
 <p>Host A is sending an enormous file to Host B over a TCP connection.<br />
 Over this connection there is never any packet loss and the timers never<br />
 expire. Denote the transmission rate of the link connecting Host A to the<br />
@@ -1172,12 +1196,9 @@ send buffer can hold only one percent of the file. What would prevent the<br />
 process in Host A from continuously passing data to its TCP socket at rate S<br />
 bps? TCP flow control? TCP congestion control? Or something else?<br />
 Elaborate.</p>
-</blockquote>
-<p>__</p>
-<p>__</p>
+<blockquote></blockquote>
 <hr />
 <h3 id="p54"><a name="user-content-p54" href="#p54" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P54</h3>
-<blockquote>
 <p>In our discussion of TCP congestion control in Section 3.7, we implicitly<br />
 assumed that the TCP sender always had data to send. Consider now the case<br />
 that the TCP sender sends a large amount of data and then goes idle (since it<br />
@@ -1185,12 +1206,9 @@ has no more data to send) at t 1 . TCP remains idle for a relatively long period
 time and then wants to send more data at t 2 . What are the advantages and dis-<br />
 advantages of having TCP use the cwnd and ssthresh values from t 1 when<br />
 starting to send data at t 2 ? What alternative would you recommend? Why?</p>
-</blockquote>
-<p>__</p>
-<p>__</p>
+<blockquote></blockquote>
 <hr />
 <h3 id="p55"><a name="user-content-p55" href="#p55" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P55</h3>
-<blockquote>
 <p>In this problem we investigate whether either UDP or TCP provides a degree<br />
 of end-point authentication.<br />
 a. Consider a server that receives a request within a UDP packet and<br />
@@ -1202,5 +1220,4 @@ responding with a SYNACK, receives an ACK with IP source address Y<br />
 with the correct acknowledgment number. Assuming the server chooses a<br />
 random initial sequence number and there is no “man-in-the-middle,” can<br />
 the server be certain that the client is indeed at Y (and not at some other<br />
-address X that is spoofing Y)?</p>
-</blockquote></article></body></html>
+address X that is spoofing Y)?</p></article></body></html>
