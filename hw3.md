@@ -148,7 +148,7 @@ samples is obtained.
 
 ###P32
 
-Consider the TCP procedure for estimating RTT. Suppose that α = 0.1. Let
+Consider the TCP procedure for estimating RTT. Suppose that  = 0.1. Let
 SampleRTT 1 be the most recent sample RTT, let SampleRTT 2 be the next
 most recent sample RTT, and so on.
 a. For a given TCP connection, suppose four acknowledgments have been
@@ -162,10 +162,11 @@ averaging procedure is called an exponential moving average.
 
 > 
 - EstimatedRTT(1) = SampleRTT
-  EstimatedRTT(2) = x * SampleRTT(1) + (1-x)*SampleRTT(2)
-  EstimatedRTT(3) = x * SampleRTT(1) + (1-x)(x*SampleRTT(2) + (1-x)*SampleRTT(3))
-  EstimatedRTT(4) = x * SampleRTT(1) + (1-x)*EstimatedRTT(3)
-- x * summation[(n-1)(1-x)^j]
+  EstimatedRTT(2) = α * SampleRTT(1) + (1-α)*SampleRTT(2)
+  EstimatedRTT(3) = α * SampleRTT(1) + (1-α)(α*SampleRTT(2) + (1-α)*SampleRTT(3))
+  EstimatedRTT(4) = α * SampleRTT(1) + (1-α)*EstimatedRTT(3)
+- ![232b](32b.png) 
+- ![32c](32c.png) 
 
 
 ----------
@@ -198,8 +199,17 @@ round, inclusive?
 
 
 > 
-once we receive 3 duplicate ACKs (1 + 3 dups), then cut data transfer in half (first peak)
-once we get a timeout (second peak), go back to 1 at slow start TCP mode
+- 1-6, 23-26
+- 6-23
+- ACK
+- timeout
+- 32
+- 21
+- 13
+- 7
+- 4, 4
+- 21, 4
+- 1,2,4,8,16,21; total=52
 
 
 ----------

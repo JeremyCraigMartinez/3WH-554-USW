@@ -1097,7 +1097,8 @@ vide the acknowledgment number.</p>
 <li>sequence        number = 207; src port number = 302; dest port number = 80;</li>
 <li>acknowledgement number = 207; src port number = 80;  dest port number = 302;</li>
 <li>acknowledgement number = 127; //still waiting for bytes 127 and after</li>
-<li><img alt="27d" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/Capture.png" /></li>
+<li><img alt="27d" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/Capture.png" /> <br />
+    wrong. ACKs should be 127, 207, 247</li>
 </ul>
 </blockquote>
 <hr />
@@ -1113,41 +1114,41 @@ obtained. Last, compute the TCP TimeoutInterval after each of these<br />
 samples is obtained.</p>
 <blockquote>
 <ol>
+<li>After 100<ul>
+<li>EstimatedRTT = 0.875<em>100 + 0.125</em>106 = 100.75ms</li>
+<li>DevRTT = 0.25<em>(106 - 100.75) + 0.75</em>5 = 5.06ms</li>
+<li>TimeoutInterval = 100.75 + 4*5.06 = 120.99ms</li>
+</ul>
+</li>
 <li>After 106<ul>
-<li>EstimatedRTT</li>
-<li>DevRTT</li>
-<li>TimeoutInterval</li>
+<li>EstimatedRTT = 0.875<em>106 + 0.125</em>120 = 103.15ms</li>
+<li>DevRTT = 0.25<em>(120 - 103.15) + 0.75</em>5 = 8ms</li>
+<li>TimeoutInterval = 103.15 + 4*8 = 135.15ms</li>
 </ul>
 </li>
 <li>After 120<ul>
-<li>EstimatedRTT</li>
-<li>DevRTT</li>
-<li>TimeoutInterval</li>
+<li>EstimatedRTT = 0.875<em>120 + 0.125</em>140 = 107.76ms</li>
+<li>DevRTT = 0.25<em>(140 - 107.76) + 0.75</em>5 = 14.06ms</li>
+<li>TimeoutInterval = 107.76 + 4*14.06 = 164ms</li>
 </ul>
 </li>
 <li>After 140<ul>
-<li>EstimatedRTT</li>
-<li>DevRTT</li>
-<li>TimeoutInterval</li>
+<li>EstimatedRTT = 0.875<em>140 + 0.125</em>90 = 105.54ms</li>
+<li>DevRTT = 0.25<em>(90 - 105.54) + 0.75</em>5 = 14.42ms</li>
+<li>TimeoutInterval = 105.54 + 4*14.42 = 163.22ms</li>
 </ul>
 </li>
 <li>After 90<ul>
-<li>EstimatedRTT</li>
-<li>DevRTT</li>
-<li>TimeoutInterval</li>
-</ul>
-</li>
-<li>After 115<ul>
-<li>EstimatedRTT</li>
-<li>DevRTT</li>
-<li>TimeoutInterval</li>
+<li>EstimatedRTT = 0.875<em>90 + 0.125</em>115 = 106.71ms</li>
+<li>DevRTT = 0.25<em>(115 - 106.71) + 0.75</em>5 = 12.88ms</li>
+<li>TimeoutInterval = 106.71 + 4*12.88 = 158.23ms</li>
 </ul>
 </li>
 </ol>
 </blockquote>
 <hr />
 <h3 id="p32"><a name="user-content-p32" href="#p32" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P32</h3>
-<p>Consider the TCP procedure for estimating RTT. Suppose that ␣ = 0.1. Let<br />
+<p>Consider the TCP procedure for estimating RTT. Suppose that  = 0.1. Let<br />
 SampleRTT 1 be the most recent sample RTT, let SampleRTT 2 be the next<br />
 most recent sample RTT, and so on.<br />
 a. For a given TCP connection, suppose four acknowledgments have been<br />
@@ -1157,7 +1158,16 @@ the four sample RTTs.<br />
 b. Generalize your formula for n sample RTTs.<br />
 c. For the formula in part (b) let n approach infinity. Comment on why this<br />
 averaging procedure is called an exponential moving average.</p>
-<blockquote></blockquote>
+<blockquote>
+<ul>
+<li>EstimatedRTT(1) = SampleRTT<br />
+  EstimatedRTT(2) = α * SampleRTT(1) + (1-α)<em>SampleRTT(2)<br />
+  EstimatedRTT(3) = α * SampleRTT(1) + (1-α)(α</em>SampleRTT(2) + (1-α)<em>SampleRTT(3))<br />
+  EstimatedRTT(4) = α * SampleRTT(1) + (1-α)</em>EstimatedRTT(3)</li>
+<li><img alt="232b" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/32b.png" /> </li>
+<li><img alt="32c" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/32c.png" /> </li>
+</ul>
+</blockquote>
 <hr />
 <h3 id="p40"><a name="user-content-p40" href="#p40" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P40</h3>
 <p>Consider Figure 3.58. Assuming TCP Reno is the protocol experiencing the<br />
@@ -1183,7 +1193,21 @@ and the congestion window size at the 19th round?<br />
 k. Again suppose TCP Tahoe is used, and there is a timeout event at 22nd<br />
 round. How many packets have been sent out from 17th round till 22nd<br />
 round, inclusive?</p>
-<blockquote></blockquote>
+<blockquote>
+<ul>
+<li>1-6, 23-26</li>
+<li>6-23</li>
+<li>ACK</li>
+<li>timeout</li>
+<li>32</li>
+<li>21</li>
+<li>13</li>
+<li>7</li>
+<li>4, 4</li>
+<li>21, 4</li>
+<li>1,2,4,8,16,21; total=52</li>
+</ul>
+</blockquote>
 <hr />
 <h3 id="p43"><a name="user-content-p43" href="#p43" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P43</h3>
 <p>Host A is sending an enormous file to Host B over a TCP connection.<br />
@@ -1196,7 +1220,11 @@ send buffer can hold only one percent of the file. What would prevent the<br />
 process in Host A from continuously passing data to its TCP socket at rate S<br />
 bps? TCP flow control? TCP congestion control? Or something else?<br />
 Elaborate.</p>
-<blockquote></blockquote>
+<blockquote>
+<p>A               B<br />
+<strong>  R bytes<br />
+|</strong>|-----------&gt;</p>
+</blockquote>
 <hr />
 <h3 id="p54"><a name="user-content-p54" href="#p54" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P54</h3>
 <p>In our discussion of TCP congestion control in Section 3.7, we implicitly<br />
@@ -1220,4 +1248,10 @@ responding with a SYNACK, receives an ACK with IP source address Y<br />
 with the correct acknowledgment number. Assuming the server chooses a<br />
 random initial sequence number and there is no “man-in-the-middle,” can<br />
 the server be certain that the client is indeed at Y (and not at some other<br />
-address X that is spoofing Y)?</p></article></body></html>
+address X that is spoofing Y)?</p>
+<blockquote>
+<ul>
+<li>the server will send it&rsquo;s response to address Y so the client at address X will not see any response. This is not a problem for establishing a connection because UDP does not require a three way handshake like TCP. Y will throw away this packet. This is common in DDoS</li>
+<li>the server will send it&rsquo;s response to address Y so the client at address X will not see any response. Client at Y cannot guess the 32 bit seq so they cannot complete the three way handshake. This is common in DDoS</li>
+</ul>
+</blockquote></article></body></html>
