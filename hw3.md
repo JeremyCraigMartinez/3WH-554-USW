@@ -103,7 +103,6 @@ vide the acknowledgment number.
 - acknowledgement number = 207; src port number = 80;  dest port number = 302;
 - acknowledgement number = 127; //still waiting for bytes 127 and after
 - ![27d](Capture.png) 
-	wrong. ACKs should be 127, 207, 247
 
 
 ----------
@@ -229,9 +228,7 @@ Elaborate.
 
 
 > 
-A               B
- __  R bytes
-|__|----------->
+Since the file being sent is smaller than the buffer on the receiver end, we need not worry about overflowing the buffer. There are no dropped packets, so it is not a congestion control issue. Since the send buffer is so small, it will fill up quickly. Once the buffer is full, it essentially can only send data at the transmission rate R, not at the TCP socket rate S.
 
 
 ----------
@@ -247,7 +244,7 @@ advantages of having TCP use the cwnd and ssthresh values from t 1 when
 starting to send data at t 2 ? What alternative would you recommend? Why?
 
 
-> 
+> This method has an advantage because the sender sends all of it's data initially in a quick fashion. Then it proceeds with the second chunk of data slowly past its ssthresh. This is advantageous unless it receives too many duplicate ACKs. Then we see a set back in performance
 
 
 ----------

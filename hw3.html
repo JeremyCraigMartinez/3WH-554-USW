@@ -1097,8 +1097,7 @@ vide the acknowledgment number.</p>
 <li>sequence        number = 207; src port number = 302; dest port number = 80;</li>
 <li>acknowledgement number = 207; src port number = 80;  dest port number = 302;</li>
 <li>acknowledgement number = 127; //still waiting for bytes 127 and after</li>
-<li><img alt="27d" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/Capture.png" /> <br />
-    wrong. ACKs should be 127, 207, 247</li>
+<li><img alt="27d" src="///C://Users/jeremy.martinez/Desktop/cpts%20455/3WH-554-USW/Capture.png" /> </li>
 </ul>
 </blockquote>
 <hr />
@@ -1221,9 +1220,7 @@ process in Host A from continuously passing data to its TCP socket at rate S<br 
 bps? TCP flow control? TCP congestion control? Or something else?<br />
 Elaborate.</p>
 <blockquote>
-<p>A               B<br />
-<strong>  R bytes<br />
-|</strong>|-----------&gt;</p>
+<p>Since the file being sent is smaller than the buffer on the receiver end, we need not worry about overflowing the buffer. There are no dropped packets, so it is not a congestion control issue. Since the send buffer is so small, it will fill up quickly. Once the buffer is full, it essentially can only send data at the transmission rate R, not at the TCP socket rate S.</p>
 </blockquote>
 <hr />
 <h3 id="p54"><a name="user-content-p54" href="#p54" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P54</h3>
@@ -1234,7 +1231,9 @@ has no more data to send) at t 1 . TCP remains idle for a relatively long period
 time and then wants to send more data at t 2 . What are the advantages and dis-<br />
 advantages of having TCP use the cwnd and ssthresh values from t 1 when<br />
 starting to send data at t 2 ? What alternative would you recommend? Why?</p>
-<blockquote></blockquote>
+<blockquote>
+<p>This method has an advantage because the sender sends all of it&rsquo;s data initially in a quick fashion. Then it proceeds with the second chunk of data slowly past its ssthresh. This is advantageous unless it receives too many duplicate ACKs. Then we see a set back in performance</p>
+</blockquote>
 <hr />
 <h3 id="p55"><a name="user-content-p55" href="#p55" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>P55</h3>
 <p>In this problem we investigate whether either UDP or TCP provides a degree<br />
